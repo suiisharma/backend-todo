@@ -4,7 +4,7 @@ import DbConnection from './Database/DbConnect.js';
 import USERrouter from './Routes/UserRoute.js';
 import Taskrouter from './Routes/TaskRoute.js';
 import cookieParser from 'cookie-parser';
-
+import cors from 'cors'
 
 
 //using config 
@@ -13,6 +13,16 @@ config(
         path:'./Data/config.env',
     }
     )
+
+    //using cors
+
+    app.use(cors(
+        {
+            origin:[process.env.frontend_url],
+            methods:["GET","POST","PUT","DELETE"],
+            credentials:true,
+        }
+    ))
     
 // starting express server
 const app=express();
