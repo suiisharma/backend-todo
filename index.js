@@ -13,21 +13,21 @@ config(
         path:'./Data/config.env',
     }
     )
-
-    //using cors
-
-    app.use(cors(
-        {
-            origin:[process.env.frontend_url],
-            methods:["GET","POST","PUT","DELETE"],
-            credentials:true,
-        }
-    ))
+    // starting express server
+    const app=express();
+    //Connecting to database
+    DbConnection();
     
-// starting express server
-const app=express();
-//Connecting to database
-DbConnection();
+        //using cors
+    
+        app.use(cors(
+            {
+                origin:[process.env.frontend_url],
+                methods:["GET","POST","PUT","DELETE"],
+                credentials:true,
+            }
+        ))
+        
 
 
 
