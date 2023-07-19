@@ -19,7 +19,10 @@ try {
      user=await User.create({name,email,password:Hashedpass});
      SendToken(user,res,"Registration successfull",201);
 } catch (error) {
-    console.log(error.message);
+    res.status(400).json({
+        success:false,
+        message:"Internal server error"
+    })
 }
 }
 
@@ -43,8 +46,10 @@ export const Login=async(req,res,next)=>{
      }
      SendToken(user,res,"Login successfull",200);
     } catch (error) {
-        console.log(error.message);
-    }
+        res.status(400).json({
+            success:false,
+            message:"Internal server error"
+        })    }
 }
 
 
@@ -63,8 +68,10 @@ export const Logout=(req,res,next)=>{
        user:req.user
     })
  } catch (error) {
-    console.log(error.message);
- }
+    res.status(400).json({
+        success:false,
+        message:"Internal server error"
+    }) }
 }
 
 //Get user details
@@ -76,6 +83,8 @@ export const GetUserDetails=async(req,res,next)=>{
        user:req.user
      })
  } catch (error) {
-    console.log(error.message);
- }
+    res.status(400).json({
+        success:false,
+        message:"Internal server error"
+    }) }
 }

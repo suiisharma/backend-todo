@@ -12,7 +12,10 @@ export const CreateTask=async(req,res,next)=>{
       message:"Task created sucessfully"
     })
   } catch (error) {
-    console.log(error.message);
+    res.status(400).json({
+      success:false,
+      message:"Internal server error"
+  })
   }
 }
 
@@ -28,7 +31,10 @@ export const FetchAllTasks=async(req,res,next)=>{
      })
   }
  catch (error) {
-    console.log(error.message);
+  res.status(404).json({
+    success:false,
+    message:"Failed to fetch information"
+})
   }
 }
 
@@ -53,7 +59,10 @@ try {
             message:"Task updated successfully"
         })
 } catch (error) {
-    console.log(error.message);
+  res.status(400).json({
+    success:false,
+    message:"Internal server error"
+})
 }
 }
 
@@ -62,19 +71,24 @@ try {
 export const DeleteTask=async(req,res,next)=>{
   try {
       const id =req.params.id;
-      const task=await Task.findById(id);
-      if(!task){
-          return res.status(400).json({
-              success:false,
-              message:"Enter a valid task"
-          })
+      const task =await Task.findByIdAndRemove(id);
+      if(task){
+       res.status(200).json({
+            success:true,
+            message:"Task deleted successfully"
+        })
       }
-      await task.remove();
-      res.status(200).json({
-          success:true,
-          message:"Task deleted successfully"
-      })
-  } catch (error) {
-    console.log(error.message);
+      else{
+          res.status(404).json({
+            success:false,
+            message:"Enter a valid task"
+          })
+          }
+      }
+ catch (error) {
+    res.status(400).json({
+      success:false,
+      message:"Internal server error"
+  })
   }
 }
